@@ -47,11 +47,8 @@ run_analysis <- function(){
         ext <- data.frame(list(subject, activity, ext_data))
         colnames(ext) <- c("subject", "activity", ext_name)
         
-        g_sub <- group_by(ext, subject)
-        g_act <- group_by(ext, activity)
-        
-        dcast(narrow, subject ~ ., max)
-        
-        
         #average
+        tidy <- ddply(ext, .(subject, activity),colwise(mean))
+        write.table(tidy, "tidy.txt", row.names=FALSE)
+        
 }
